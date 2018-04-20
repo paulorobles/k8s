@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: selenium-hub
+  labels:
+    name: selenium-hub
+spec:
+  replicas: 1
+  selector:
+    name: selenium-hub
+  template:
+    metadata:
+      labels:
+        name: selenium-hub
+    spec:
+      containers:
+      - name: selenium-hub
+        image: girishdudhwal/selenium-hub-girish:latest
+        #image: selenium/hub:3.0.1-aluminum
+        #image: selenium/hub:3.0.1-dysprosium
+
+        ports:
+          - containerPort: 4444
+        resources:
+          limits:
+            memory: "1100Mi"
+            cpu: "0.8"
+        env:
+           # - name: "SE_OPTS"
+           #   value: "-debug"
+           # - name: "JAVA_OPTS"
+           #   value: "-Xmx512m"
+        livenessProbe:
+          httpGet:
+            path: /grid/console
+            port: 4444
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /grid/console
+            port: 4444
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
