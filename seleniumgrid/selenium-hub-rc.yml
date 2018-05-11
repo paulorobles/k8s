@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
       - name: selenium-hub
-        image: girishdudhwal/selenium-hub-girish:latest
+        image: paulorobles/selenium-hub:latest
+        #image: girishdudhwal/selenium-hub-girish:latest
         #image: selenium/hub:3.0.1-aluminum
         #image: selenium/hub:3.0.1-dysprosium
-
         ports:
           - containerPort: 4444
         resources:

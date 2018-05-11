@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: selenium-node-chrome-spl
+  labels:
+    name: selenium-node-chrome-spl
+spec:
+  replicas: 3
+  selector:
+    name: selenium-node-chrome-spl
+  template:
+    metadata:
+      labels:
+        name: selenium-node-chrome-spl
+    spec:
+      volumes:
+      - name: dev-volume
+        hostPath:
+          path: /dev/shm
+      containers:
+      - name: selenium-node-chrome
+        #image: selenium/node-chrome-debug:2.47.1
+        #image: girishdudhwal/node-chrome-spl:latest
+        #image: girishdudhwal/node-chrome-5-mau:latest
+        #image: girishdudhwal/node-chrome-updated:1.0
+        #image: girishdudhwal/node-chrome-final:1.0
+        image: paulorobles/node-chrome-final:1.0
+        volumeMounts:
+        - mountPath: /dev/shm
+          name: dev-volume
+          readOnly: false
+        ports:
+          - containerPort: 5900
+        env:
+          - name: HUB_PORT_4444_TCP_ADDR
+            value: "selenium-hub"
+          - name: HUB_PORT_4444_TCP_PORT
+            value: "4444"
+        #resources:
+        #  limits:
+        #    memory: "2500Mi"
+        #    cpu: ".4"
